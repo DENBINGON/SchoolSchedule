@@ -1,4 +1,5 @@
-import sqlite3, wget
+import sqlite3, wget, os
+from modules.const import __dataBase_Download__
 
 
 # {'first_name': 'Руслан', 'id': 271808173, 'last_name': 'Соловьев', 'home_town': 'Туапсе', 'status': '/kick %USERNAME%', 'bdate': '28.6.2001', 'bdate_visibility': 1,
@@ -6,6 +7,11 @@ import sqlite3, wget
 
 class dataBaseMethods( ):
     def __init__ ( self ):
+        if os.path.exists( 'modules/db.sqlite' ) == True:
+            pass
+        else:
+            wget.download( __dataBase_Download__, 'modules/db.sqlite' )
+
         self.connection = sqlite3.connect( 'modules/db.sqlite' )
         self.cursor = self.connection.cursor( )
 
@@ -24,8 +30,8 @@ class dataBaseMethods( ):
             pass
         self.cursor.execute(
             f"""INSERT INTO users VALUES ({info[ 'id' ]}, '{info[ 'first_name' ]}', '{info[ 'last_name' ]}',
-                                                          '{info[ 'home_town' ]}', '{info[ 'bdate' ]}', {info[ 'sex' ]}, 
-                                                          '{info[ 'screen_name' ]}')""" )
+                                         '{info[ 'home_town' ]}', '{info[ 'bdate' ]}', {info[ 'sex' ]}, 
+                                         '{info[ 'screen_name' ]}')""" )
         self.connection.commit( )
 
     def addNewScheduleInformation ( self, info ):

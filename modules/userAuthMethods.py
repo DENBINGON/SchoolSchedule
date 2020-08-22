@@ -1,6 +1,5 @@
 import vk_api
 from modules import const
-from modules import db
 
 
 class UserAuth:
