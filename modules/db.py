@@ -4,6 +4,11 @@ from modules.const import __dataBase_Download__
 
 # [{'id': 271808173, 'first_name': 'Руслан', 'last_name': 'Соловьев'}]
 
+# [('русский', 'математика', 'информатика', 'английский', 'биология', 'кубановеденье', None),
+# ('русский', 'математика', 'информатика', 'английский', 'биология', 'кубановеденье', None),
+# ('русский', 'математика', 'информатика', 'английский', 'биология', 'кубановеденье', None)]
+
+
 class dataBaseMethods( ):
     def __init__ ( self ):
         if os.path.exists( 'modules/db.sqlite' ) == True:
@@ -19,9 +24,8 @@ class dataBaseMethods( ):
                                                           '{info[ 'last_name' ]}')""" )
         self.connection.commit( )
 
-    def addNewScheduleInformation ( self, info ):
-        self.cursor.execute( "" )
-        self.connection.commit( )
+    def getScheduleList ( self ):
+        return self.cursor.execute( "SELECT * FROM schedule" ).fetchall( )
 
     def watchInformation ( self, info ):
         self.cursor.execute( "" )

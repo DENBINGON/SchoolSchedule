@@ -15,7 +15,7 @@ class VkBot:
         elif message.upper( ) == self._COMMANDS[ 2 ]:
             return dev, 1
         elif message.upper( ) == self._COMMANDS[ 3 ]:
-            return dev, 1
+            return scheduleInformation( ), 1
         elif message.upper( ) == self._COMMANDS[ 4 ]:
             return dev, 1
         elif message.upper( ) == self._COMMANDS[ 5 ]:
