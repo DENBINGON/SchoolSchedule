@@ -3,7 +3,6 @@ from modules.db import dataBaseMethods
 
 DBMethods = dataBaseMethods( )
 
-
 def scheduleInformation ( ):
     scheduleList = DBMethods.getScheduleList( )
     weekList = [ 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье' ]
@@ -21,7 +20,10 @@ def scheduleInformation ( ):
         numOfLesson = 0
         for day in scheduled:
             numOfLesson += 1
-            out += str( numOfLesson ) + '. ' + str( day[ score ] ) + '\n'
+            if day[ score ] == None:
+                pass
+            else:
+                out += str( numOfLesson ) + '. ' + str( day[ score ] ) + '\n'
         score += 1
 
     return out
