@@ -27,6 +27,9 @@ class dataBaseMethods( ):
     def getScheduleList ( self ):
         return self.cursor.execute( "SELECT * FROM schedule" ).fetchall( )
 
+    def getScheduleCallsList ( self ):
+        return self.cursor.execute( "SELECT * FROM schedule_call" ).fetchall( )
+
     def watchInformation ( self, info ):
         self.cursor.execute( "" )
         self.connection.commit( )

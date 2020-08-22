@@ -25,7 +25,31 @@ def scheduleInformation ( ):
             else:
                 out += str( numOfLesson ) + '. ' + str( day[ score ] ) + '\n'
         score += 1
+    return out
 
+
+def scheduleCallsInformation ( ):
+    scheduleList = DBMethods.getScheduleCallsList( )
+    weekList = [ 'Понедельник', 'Вторник-пятница', 'Суббота' ]
+    scheduled, schedule = [ ], [ ]
+    for row in scheduleList:
+        scheduled.append( schedule )
+        schedule = [ ]
+        for col in row:
+            schedule.append( col )
+    del scheduled[ 0 ]
+    score = 0
+    out = 'Рассписание звонков МАОУ СОШ №5 г.Туапсе\n'
+    for dayAWeek in weekList:
+        out += '\n' + str( dayAWeek ) + '\n'
+        numOfLesson = 0
+        for day in scheduled:
+            numOfLesson += 1
+            if day[ score ] == None:
+                pass
+            else:
+                out += str( numOfLesson ) + '. ' + str( day[ score ] ) + '\n'
+        score += 1
     return out
 
 
