@@ -27,6 +27,15 @@ class dataBaseMethods( ):
         self.cursor.execute( "" )
         self.connection.commit( )
 
+    def removeUser ( self, user_id ):
+        self.cursor.execute( f"DELETE FROM users WHERE user_id={user_id}" )
+
+    def checkUser ( self, user_id ):
+        if self.cursor.execute( f"SELECT * FROM users WHERE user_id={user_id}" ).fetchone( ) == None:
+            return False
+        else:
+            return True
+
     def getUserFirstName ( self, user_id ):
         return str( self.cursor.execute( f"SELECT * FROM users WHERE user_id={user_id}" ).fetchone( ) ).split( "'" )[
             1 ]

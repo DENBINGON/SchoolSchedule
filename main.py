@@ -24,10 +24,17 @@ class SchoolScheduleMainApp( ):
                     if userCode == 1:
                         self.WriteMessage( event.user_id, answer )
                     else:
-                        self.DBMethods.addNewUserInformation(
-                            self.userMethods.getUserInformation( event.user_id )[ 0 ] )
-                        answer, userCode = bot.MessageParcer( event.text )
-                        self.WriteMessage( event.user_id, answer )
+                        if self.DBMethods.checkUser( event.user_id ) == True:
+                            self.DBMethods.removeUser( event.user_id )
+                            self.DBMethods.addNewUserInformation(
+                                self.userMethods.getUserInformation( event.user_id )[ 0 ] )
+                            answer, userCode = bot.MessageParcer( event.text )
+                            self.WriteMessage( event.user_id, answer )
+                        else:
+                            self.DBMethods.addNewUserInformation(
+                                self.userMethods.getUserInformation( event.user_id )[ 0 ] )
+                            answer, userCode = bot.MessageParcer( event.text )
+                            self.WriteMessage( event.user_id, answer )
 
     def WriteMessage ( self, user_id, message ):
         self.session.method( 'messages.send',
