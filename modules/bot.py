@@ -27,7 +27,7 @@ class VkBot:
                 userFirstName = None
             return firstHello_1 + str( userFirstName ) + firstHello_2, 0
         elif message.upper( ) == self._COMMANDS[ 7 ]:
-            return dev, 1
+            return help, 1
         elif message.upper( ) == self._COMMANDS[ 8 ]:
             return scheduleCallsInformation( ), 1
         else:
