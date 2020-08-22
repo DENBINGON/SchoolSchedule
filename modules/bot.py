@@ -1,4 +1,4 @@
-from modules import const, db
+from modules import db
 from modules.messages import *
 
 class VkBot:

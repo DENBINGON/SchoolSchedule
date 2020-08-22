@@ -24,7 +24,8 @@ class SchoolScheduleMainApp( ):
                     if userCode == 1:
                         self.WriteMessage( event.user_id, answer )
                     else:
-                        self.DBMethods.addNewUserInformation( self.userMethods.getUserInformation( event.user_id ) )
+                        self.DBMethods.addNewUserInformation(
+                            self.userMethods.getUserInformation( event.user_id )[ 0 ] )
                         answer, userCode = bot.MessageParcer( event.text )
                         self.WriteMessage( event.user_id, answer )
 
