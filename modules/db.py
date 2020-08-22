@@ -16,7 +16,7 @@ class dataBaseMethods( ):
 
     def addNewUserInformation ( self, info ):
         self.cursor.execute( f"""INSERT INTO users VALUES ({info[ 'id' ]}, '{info[ 'first_name' ]}',
-                                                          '{info[ 'last_name' ]}'""" )
+                                                          '{info[ 'last_name' ]}')""" )
         self.connection.commit( )
 
     def addNewScheduleInformation ( self, info ):
