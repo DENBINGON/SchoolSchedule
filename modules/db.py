@@ -1,4 +1,4 @@
-import sqlite3
+import sqlite3, wget
 
 
 # {'first_name': 'Руслан', 'id': 271808173, 'last_name': 'Соловьев', 'home_town': 'Туапсе', 'status': '/kick %USERNAME%', 'bdate': '28.6.2001', 'bdate_visibility': 1,
@@ -6,13 +6,32 @@ import sqlite3
 
 class dataBaseMethods( ):
     def __init__ ( self ):
-        pass
+        self.connection = sqlite3.connect( 'modules/db.sqlite' )
+        self.cursor = self.connection.cursor( )
 
     def addNewUserInformation ( self, info ):
-        pass
+        if info[ 'home_town' ] == None:
+            info[ 'home_town' ] = None
+        else:
+            pass
+        if info[ 'bdate' ] == None:
+            info[ 'bdate' ] = None
+        else:
+            pass
+        if info[ 'screen_name' ] == None:
+            info[ 'screen_name' ] = None
+        else:
+            pass
+        self.cursor.execute(
+            f"""INSERT INTO users VALUES ({info[ 'id' ]}, '{info[ 'first_name' ]}', '{info[ 'last_name' ]}',
+                                                          '{info[ 'home_town' ]}', '{info[ 'bdate' ]}', {info[ 'sex' ]}, 
+                                                          '{info[ 'screen_name' ]}')""" )
+        self.connection.commit( )
 
     def addNewScheduleInformation ( self, info ):
-        pass
+        self.cursor.execute( "" )
+        self.connection.commit( )
 
     def watchInformation ( self, info ):
-        pass
+        self.cursor.execute( "" )
+        self.connection.commit( )

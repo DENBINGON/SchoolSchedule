@@ -3,7 +3,6 @@ from modules import const
 
 class VkBot:
     def __init__ ( self, user_id ):
-        print( "Создан объект бота!" )
         self._USER_ID = user_id
         self._COMMANDS = [ "КТО ТЫ", "ДОБАВИТЬ", "УДАЛИТЬ", "РАССПИСАНИЕ", "ЧТО НА ЗАВТРА", "ЧТО НА", "НАЧАТЬ",
                            "ПОМОЩЬ" ]
@@ -26,4 +25,4 @@ class VkBot:
         elif message.upper( ) == self._COMMANDS[ 7 ]:
             return f"разработка", 1
         else:
-            return 'Не понимаю о чем вы... Воспользуйся коммандой "помощь" и я расскажу тебе что я умею!', 1
+            return 'Не понимаю о чем ты... Воспользуйся коммандой "помощь" и я расскажу тебе что я умею!', 1

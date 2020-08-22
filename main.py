@@ -1,3 +1,6 @@
+#!/bin/bash
+# -*- utf-8 -*-
+
 # Импорт библиотек
 import vk_api, random
 from modules import const, db, sys, userAuthMethods
@@ -11,13 +14,11 @@ class SchoolScheduleMainApp( ):
         self.session = vk_api.VkApi( token=const.__TOKEN_APP__ )
         self.session._auth_token( )
         self.longpoll = VkLongPoll( self.session )
-        self.userMethods = userAuthMethods.UserAuth( )
-        self.DBMethods = db.dataBaseMethods( )
+        self.userMethods, self.DBMethods = userAuthMethods.UserAuth( ), db.dataBaseMethods( )
         for event in self.longpoll.listen( ):
             if event.type == VkEventType.MESSAGE_NEW:
                 if event.to_me:
-                    print( 'New message:' )
-                    print( f'For me by: {event.user_id}\n', end='' )
+                    print( f'New message -> For me by: {event.user_id} -> Text: {event.text} \n', end='' )
                     bot = VkBot( event.user_id )
                     answer, userCode = bot.MessageParcer( event.text )
                     if userCode == 1:
@@ -25,8 +26,6 @@ class SchoolScheduleMainApp( ):
                     else:
                         self.DBMethods.addNewUserInformation( self.userMethods.getUserInformation( event.user_id ) )
                         self.WriteMessage( event.user_id, answer )
-
-                    print( 'Text: ', event.text )
 
     def WriteMessage ( self, user_id, message ):
         self.session.method( 'messages.send',
