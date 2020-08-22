@@ -41,3 +41,7 @@ class dataBaseMethods( ):
     def watchInformation ( self, info ):
         self.cursor.execute( "" )
         self.connection.commit( )
+
+    def getUserFirstName ( self, user_id ):
+        return str( self.cursor.execute( f"SELECT * FROM users WHERE user_id={user_id}" ).fetchone( ) ).split( "'" )[
+            1 ]
