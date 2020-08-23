@@ -5,7 +5,7 @@ DBMethods = dataBaseMethods( )
 
 def scheduleInformation ( ):
     scheduleList = DBMethods.getScheduleList( )
-    weekList = [ 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье' ]
+    weekList = [ 'Понедельник: ', 'Вторник: ', 'Среда: ', 'Четверг: ', 'Пятница: ', 'Суббота: ' ]
     scheduled, schedule = [ ], [ ]
     for row in scheduleList:
         scheduled.append( schedule )
@@ -30,7 +30,7 @@ def scheduleInformation ( ):
 
 def scheduleCallsInformation ( ):
     scheduleList = DBMethods.getScheduleCallsList( )
-    weekList = [ 'Понедельник', 'Вторник-пятница', 'Суббота' ]
+    weekList = [ 'Расписание звонков: ', 'Время перемен: ' ]
     scheduled, schedule = [ ], [ ]
     for row in scheduleList:
         scheduled.append( schedule )
