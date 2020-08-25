@@ -1,14 +1,6 @@
 import sqlite3, wget, os
 from modules.const import __dataBase_Download__
 
-
-# [{'id': 271808173, 'first_name': 'Руслан', 'last_name': 'Соловьев'}]
-
-# [('русский', 'математика', 'информатика', 'английский', 'биология', 'кубановеденье', None),
-# ('русский', 'математика', 'информатика', 'английский', 'биология', 'кубановеденье', None),
-# ('русский', 'математика', 'информатика', 'английский', 'биология', 'кубановеденье', None)]
-
-
 class dataBaseMethods( ):
     def __init__ ( self ):
         if os.path.exists( 'modules/db.sqlite' ) == True:
@@ -29,10 +21,6 @@ class dataBaseMethods( ):
 
     def getScheduleCallsList ( self ):
         return self.cursor.execute( "SELECT * FROM schedule_calls" ).fetchall( )
-
-    def watchInformation ( self, info ):
-        self.cursor.execute( "" )
-        self.connection.commit( )
 
     def removeUser ( self, user_id ):
         self.cursor.execute( f"DELETE FROM users WHERE user_id={user_id}" )
