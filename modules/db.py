@@ -34,3 +34,12 @@ class dataBaseMethods( ):
     def getUserFirstName ( self, user_id ):
         return str( self.cursor.execute( f"SELECT * FROM users WHERE user_id={user_id}" ).fetchone( ) ).split( "'" )[
             1 ]
+
+    def getHomework ( self, date ):
+        return self.cursor.execute( f'SELECT * FROM schedule_homework WHERE date="{date}"' ).fetchone( )
+
+    def insertHomework ( self, obj ):
+        pass
+
+    def runSQLRequest ( self, req ):
+        pass

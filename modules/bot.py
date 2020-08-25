@@ -1,5 +1,6 @@
-from modules import db
+from modules import db, homework
 from modules.messages import *
+import pendulum
 
 class VkBot:
     def __init__ ( self, user_id ):
@@ -7,6 +8,7 @@ class VkBot:
         self._COMMANDS = [ "КТО ТЫ", "ДОБАВИТЬ", "УДАЛИТЬ", "РАСПИСАНИЕ УРОКОВ", "ЧТО НА ЗАВТРА", "ЧТО НА", "НАЧАТЬ",
                            "ПОМОЩЬ", "РАСПИСАНИЕ ЗВОНКОВ" ]
         self.DBMethods = db.dataBaseMethods( )
+        self.HomeworkMethods = homework.getHomework( )
     def MessageParcer ( self, message ):
         if message.upper( ) == self._COMMANDS[ 0 ]:
             return whoMe, 1
@@ -17,7 +19,8 @@ class VkBot:
         elif message.upper( ) == self._COMMANDS[ 3 ]:
             return scheduleInformation, 1
         elif message.upper( ) == self._COMMANDS[ 4 ]:
-            return dev, 1
+            return self.HomeworkMethods.getAndParceHomework(
+                pendulum.tomorrow( 'Europe/Moscow' ).format( 'DD.MM.YYYY' ) ), 1
         elif message.upper( ) == self._COMMANDS[ 5 ]:
             return dev, 1
         elif message.upper( ) == self._COMMANDS[ 6 ]:
