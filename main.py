@@ -2,7 +2,7 @@
 # -*- utf-8 -*-
 
 # Импорт библиотек
-import vk_api, random, vk
+import vk_api, random
 from modules import const, db
 from modules.bot import VkBot
 from vk_api.longpoll import VkLongPoll, VkEventType
@@ -13,9 +13,8 @@ class SchoolScheduleMainApp( ):
     def __init__ ( self ):
 
         self.session = vk_api.VkApi( token=const.__TOKEN_APP__ )
-        self.session_ = vk.Session( access_token=const.__TOKEN_APP__ )
+
         self.session._auth_token( )
-        self.API = vk.API( self.session_ )
 
         self.longpoll = VkLongPoll( self.session )
         self.DBMethods = db.dataBaseMethods( )
@@ -47,7 +46,8 @@ class SchoolScheduleMainApp( ):
                                'keyboard': const.__KEYBOARD__ } )
 
     def getUserInformation ( self, user_id ):
-        return self.API.users.get( user_id=user_id, v='5.21' )
+        return self.session.method( 'users.get',
+                                    { 'user_id': user_id, 'random_id': random.random( ) * 1000 } )
 
 # Запускаем
 if __name__ == "__main__":

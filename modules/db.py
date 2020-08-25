@@ -38,8 +38,9 @@ class dataBaseMethods( ):
     def getHomework ( self, date ):
         return self.cursor.execute( f'SELECT * FROM schedule_homework WHERE date="{date}"' ).fetchone( )
 
-    def insertHomework ( self, obj ):
-        pass
+    def insertHomework ( self, date, obj ):
+        self.cursor.execute( f"""INSERT INTO schedule_homework VALUES ('{date}', '{obj}')""" )
+        self.connection.commit( )
 
     def runSQLRequest ( self, req ):
         pass
