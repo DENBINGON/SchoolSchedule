@@ -36,11 +36,21 @@ class dataBaseMethods( ):
             1 ]
 
     def getHomework ( self, date ):
-        return self.cursor.execute( f'SELECT * FROM schedule_homework WHERE date="{date}"' ).fetchone( )
+        return self.cursor.execute( f'SELECT * FROM schedule_homework WHERE date={date}' ).fetchone( )
 
     def insertHomework ( self, date, obj ):
-        self.cursor.execute( f"""INSERT INTO schedule_homework VALUES ('{date}', '{obj}')""" )
+        self.cursor.execute( f"""INSERT INTO schedule_homework VALUES ({date}, '{obj}')""" )
         self.connection.commit( )
 
     def runSQLRequest ( self, req ):
-        pass
+        try:
+            out = self.cursor.execute( req ).fetchall( )
+        except:
+            self.cursor.execute( req )
+            out = 'Done!'
+        self.connection.commit( )
+        return out
+
+    def removeHomework ( self, date ):
+        self.cursor.execute( f"DELETE FROM schedule_homework WHERE date={date}" )
+        self.connection.commit( )

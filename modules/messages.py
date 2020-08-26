@@ -4,56 +4,64 @@ from modules.db import dataBaseMethods
 DBMethods = dataBaseMethods( )
 
 def scheduleInformation ( ):
-    scheduleList = DBMethods.getScheduleList( )
-    weekList = [ 'Понедельник: ', 'Вторник: ', 'Среда: ', 'Четверг: ', 'Пятница: ', 'Суббота: ' ]
-    scheduled, schedule = [ ], [ ]
-    score, out = 0, 'Рассписание 11Б\n'
-    for row in scheduleList:
-        scheduled.append( schedule )
-        schedule = [ ]
-        for col in row:
-            schedule.append( col )
-    del scheduled[ 0 ]
-    for dayAWeek in weekList:
-        out += '\n' + str( dayAWeek ) + '\n'
-        numOfLesson = 0
-        for day in scheduled:
-            numOfLesson += 1
-            if day[ score ] == None:
-                pass
-            else:
-                out += str( numOfLesson ) + '. ' + str( day[ score ] ) + '\n'
-        score += 1
+    try:
+        scheduleList = DBMethods.getScheduleList( )
+        weekList = [ 'Понедельник: ', 'Вторник: ', 'Среда: ', 'Четверг: ', 'Пятница: ', 'Суббота: ' ]
+        scheduled, schedule = [ ], [ ]
+        score, out = 0, 'Рассписание 11Б\n'
+        for row in scheduleList:
+            scheduled.append( schedule )
+            schedule = [ ]
+            for col in row:
+                schedule.append( col )
+        del scheduled[ 0 ]
+        for dayAWeek in weekList:
+            out += '\n' + str( dayAWeek ) + '\n'
+            numOfLesson = 0
+            for day in scheduled:
+                numOfLesson += 1
+                if day[ score ] == None:
+                    pass
+                else:
+                    out += str( numOfLesson ) + '. ' + str( day[ score ] ) + '\n'
+            score += 1
+    except:
+        out = 'Не найдено'
     return out
 
 
 def scheduleCallsInformation ( ):
-    scheduleList = DBMethods.getScheduleCallsList( )
-    weekList = [ 'Понедельник - пятница: ', 'Суббота: ' ]
-    scheduled, schedule = [ ], [ ]
-    out, score = 'Рассписание звонков МАОУ СОШ №5 г.Туапсе\n', 0
-    for row in scheduleList:
-        scheduled.append( schedule )
-        schedule = [ ]
-        for col in row:
-            schedule.append( col )
-    del scheduled[ 0 ]
-    for dayAWeek in weekList:
-        out += '\n' + str( dayAWeek ) + '\n'
-        numOfLesson = 0
-        for day in scheduled:
-            numOfLesson += 1
-            if day[ score ] == None:
-                pass
-            else:
-                out += str( numOfLesson ) + '. ' + str( day[ score ] ) + '\n'
-        score += 1
+    try:
+        scheduleList = DBMethods.getScheduleCallsList( )
+        weekList = [ 'Понедельник - пятница: ', 'Суббота: ' ]
+        scheduled, schedule = [ ], [ ]
+        out, score = 'Рассписание звонков МАОУ СОШ №5 г.Туапсе\n', 0
+        for row in scheduleList:
+            scheduled.append( schedule )
+            schedule = [ ]
+            for col in row:
+                schedule.append( col )
+        del scheduled[ 0 ]
+        for dayAWeek in weekList:
+            out += '\n' + str( dayAWeek ) + '\n'
+            numOfLesson = 0
+            for day in scheduled:
+                numOfLesson += 1
+                if day[ score ] == None:
+                    pass
+                else:
+                    out += str( numOfLesson ) + '. ' + str( day[ score ] ) + '\n'
+            score += 1
+    except:
+        out = 'Не найдено'
     return out
 
 
 scheduleInformation = scheduleInformation( )
 scheduleCallsInformation = scheduleCallsInformation( )
 
+addSch = 'Напишите сообщение типа -> дата(формата DD.MM.YYYY) перенос название предмета и домашнее задание слитно: '
+getHWOnDate = 'Напишите дату в формате DD.MM.YYYY: '
 firstHello_1, firstHello_2 = "Ой, привет ", '! Вижу Ты тут в первые. Напиши мне "Кто ты" и я расскажу о себе)'
 dev = "Функция уже в разработке, скоро станет доступна, осталось совсем чуть чуть :)"
 whoMe = f"Привет🖐!\nЯ бот помощник 🤖, созданный специально для облегчения твоей жизни 😜❤\n\n✌ Бот-помощник SchoolSchedule\n✅ Версия -> {__version__}\n📑 Source code available on https://github.com/denbingon/schoolschedule\n📑 Автор -> https://vk.com/denbingon"

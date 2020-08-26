@@ -2,7 +2,7 @@
 #   DESCRIPTION data saver   ->    [{'id':id, 'lesson':lesson}, 'hw':hw]
 # [('26.08.2020', "[{'id':id, 'lesson':lesson, 'hw':hw}]"), ('26.08.2020', "[{'id':id, 'lesson':lesson, 'hw':hw}]")]
 import json
-from modules import db
+from modules import db, sys
 
 
 class HomeworkMethods:
@@ -11,8 +11,9 @@ class HomeworkMethods:
 
     def getAndParceHomework ( self, date ):
         try:
-            list = json.loads( str( self.DBMethods.getHomework( date ) ).split( "'" )[ 3 ] )
-
+            datefrom, lists = self.DBMethods.getHomework( sys.timeToStr( date ) )
+            del datefrom
+            list = json.loads( lists )
             container_list, out = 0, f'Д/з на {date} для 11Б\n\n'
             for event in list:
                 container_list += 1
@@ -21,12 +22,12 @@ class HomeworkMethods:
                 cont = list[ f"container_{container_id + 1}" ]
                 out += f'{container_id + 1}. {cont[ "lesson" ]} -> {cont[ "hw" ]}\n'
         except:
-            out = 'Ничего не найдено :('
+            out = 'Ничего не задано :)'
         return out
 
     def insertHomework ( self, date, data ):
         try:
-            list = json.loads( str( self.DBMethods.getHomework( date ) ).split( "'" )[ 3 ] )
+            list = json.loads( str( self.DBMethods.getHomework( sys.timeToStr( date ) ) ).split( "'" )[ 3 ] )
             container_list, obj = 0, '{'
             for event in list:
                 container_list += 1
@@ -41,9 +42,10 @@ class HomeworkMethods:
                 else:
                     obj += ','
             obj += '}'
+            self.DBMethods.removeHomework( sys.timeToStr( date ) )
+            self.DBMethods.insertHomework( sys.timeToStr( date ), obj )
         except:
             obj = '{'
             obj += f'"container_1' + '":{"id":' + str( 1 ) + ',"lesson":"' + data[
                 0 ] + '","hw":"' + data[ 1 ] + '"}}'
-        print( obj )
-        self.DBMethods.insertHomework( date, obj )
+            self.DBMethods.insertHomework( sys.timeToStr( date ), obj )
