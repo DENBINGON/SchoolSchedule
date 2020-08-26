@@ -49,6 +49,7 @@ class VkBot:
             mes = self.API.messages.getConversations( offset=0, count=20, filter="unanswered", v='5.21' )
             if mes[ "count" ] >= 1:
                 if mes[ "items" ][ 0 ][ "last_message" ][ "from_id" ] == self._USER_ID:
+                    self.DBMethods.anotherInfoAdd( self._USER_ID )
                     return mes[ "items" ][ 0 ][ "last_message" ][ "text" ]
                 else:
                     pass

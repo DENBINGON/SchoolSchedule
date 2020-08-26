@@ -54,3 +54,22 @@ class dataBaseMethods( ):
     def removeHomework ( self, date ):
         self.cursor.execute( f"DELETE FROM schedule_homework WHERE date={date}" )
         self.connection.commit( )
+
+    def anotherInfoAdd ( self, user_id ):
+        self.cursor.execute( f'INSERT INTO another_info VALUES ({user_id})' )
+        self.connection.commit( )
+
+    def anotherInfoRemove ( self, user_id ):
+        self.cursor.execute( f'DELETE FROM another_info WHERE user_id={user_id}' )
+        self.connection.commit( )
+
+    def anotherInfoGet ( self, user_id ):
+        tuple = self.cursor.execute( f'SELECT * FROM another_info' ).fetchall( )
+        idList = [ ]
+        for id in tuple:
+            idList.append( id[ 0 ] )
+        if user_id in idList:
+            self.anotherInfoRemove( user_id )
+            return True
+        else:
+            return False

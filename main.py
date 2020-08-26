@@ -23,23 +23,26 @@ class SchoolScheduleMainApp( ):
             try:
                 if event.type == VkEventType.MESSAGE_NEW:
                     if event.to_me:
-                        print( f'New message -> For me by: {event.user_id} -> Text: {event.text} \n', end='' )
-                        bot = VkBot( event.user_id )
-                        answer, userCode = bot.MessageParcer( event.text )
-                        if userCode == 1:
-                            self.WriteMessage( event.user_id, answer )
-                        else:
-                            if self.DBMethods.checkUser( event.user_id ) == True:
-                                self.DBMethods.removeUser( event.user_id )
-                                self.DBMethods.addNewUserInformation(
-                                    self.getUserInformation( event.user_id )[ 0 ] )
-                                answer, userCode = bot.MessageParcer( event.text )
+                        if self.DBMethods.anotherInfoGet( event.user_id ) == False:
+                            print( f'New message -> For me by: {event.user_id} -> Text: {event.text} \n', end='' )
+                            bot = VkBot( event.user_id )
+                            answer, userCode = bot.MessageParcer( event.text )
+                            if userCode == 1:
                                 self.WriteMessage( event.user_id, answer )
                             else:
-                                self.DBMethods.addNewUserInformation(
-                                    self.getUserInformation( event.user_id )[ 0 ] )
-                                answer, userCode = bot.MessageParcer( event.text )
-                                self.WriteMessage( event.user_id, answer )
+                                if self.DBMethods.checkUser( event.user_id ) == True:
+                                    self.DBMethods.removeUser( event.user_id )
+                                    self.DBMethods.addNewUserInformation(
+                                        self.getUserInformation( event.user_id )[ 0 ] )
+                                    answer, userCode = bot.MessageParcer( event.text )
+                                    self.WriteMessage( event.user_id, answer )
+                                else:
+                                    self.DBMethods.addNewUserInformation(
+                                        self.getUserInformation( event.user_id )[ 0 ] )
+                                    answer, userCode = bot.MessageParcer( event.text )
+                                    self.WriteMessage( event.user_id, answer )
+                        else:
+                            pass
             except:
                 continue
 
