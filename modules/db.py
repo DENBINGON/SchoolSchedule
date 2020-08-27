@@ -65,11 +65,22 @@ class dataBaseMethods( ):
 
     def anotherInfoGet ( self, user_id ):
         tuple = self.cursor.execute( f'SELECT * FROM another_info' ).fetchall( )
-        idList = [ ]
+        idList, count = [ ], 0
         for id in tuple:
             idList.append( id[ 0 ] )
         if user_id in idList:
+            for inx in idList:
+                if user_id == inx:
+                    count += 1
+                else:
+                    pass
             self.anotherInfoRemove( user_id )
+            if count > 1:
+                count -= 1
+                for i in range( 0, count ):
+                    self.anotherInfoAdd( user_id )
+            else:
+                self.anotherInfoRemove( user_id )
             return True
         else:
             return False
