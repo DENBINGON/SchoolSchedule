@@ -59,7 +59,8 @@ def scheduleCallsInformation ( ):
 
 scheduleInformation = scheduleInformation( )
 scheduleCallsInformation = scheduleCallsInformation( )
-
+selectSch = 'Выбери какое расписание Тебе нужно: '
+accessDenied = 'У Тебя нет доступа к этой комманде :('
 addSch = 'Напиши сообщение типа -> дата(формата DD.MM.YYYY) перенос название предмета и домашнее задание слитно: '
 getHWOnDate = 'Выбери кнопку: '
 getHWOnDateSelect = 'Напиши дату в формате DD.MM.YYYY: '
