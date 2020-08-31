@@ -55,8 +55,8 @@ class dataBaseMethods( ):
         self.cursor.execute( f"DELETE FROM schedule_homework WHERE date={date}" )
         self.connection.commit( )
 
-    def anotherInfoAdd ( self, user_id ):
-        self.cursor.execute( f'INSERT INTO another_info VALUES ({user_id})' )
+    def anotherInfoAdd ( self, user_id, obj ):
+        self.cursor.execute( f"INSERT INTO another_info VALUES ({user_id}, '{obj}')" )
         self.connection.commit( )
 
     def anotherInfoRemove ( self, user_id ):
@@ -65,11 +65,9 @@ class dataBaseMethods( ):
 
     def anotherInfoGet ( self, user_id ):
         tuple = self.cursor.execute( f'SELECT * FROM another_info' ).fetchall( )
-        idList = [ ]
-        for id in tuple:
-            idList.append( id[ 0 ] )
-        if user_id in idList:
-            self.anotherInfoRemove( user_id )
-            return True
+        for id, obj in tuple:
+            if id == user_id:
+                self.anotherInfoRemove( user_id )
+                return obj
         else:
             return False

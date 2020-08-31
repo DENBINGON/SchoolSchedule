@@ -18,38 +18,43 @@ class SchoolScheduleMainApp( ):
 
         self.longpoll = VkLongPoll( self.session )
         self.DBMethods = db.dataBaseMethods( )
-
-        for event in self.longpoll.listen( ):
-            try:
-                if event.type == VkEventType.MESSAGE_NEW:
-                    if event.to_me:
-                        if self.DBMethods.anotherInfoGet( event.user_id ) == False:
+        try:
+            for event in self.longpoll.listen( ):
+                try:
+                    if event.type == VkEventType.MESSAGE_NEW:
+                        if event.to_me:
                             print( f'New message -> For me by: {event.user_id} -> Text: {event.text} \n', end='' )
                             bot = VkBot( event.user_id )
                             answer, userCode = bot.MessageParcer( event.text )
                             if userCode == 1:
-                                self.WriteMessage( event.user_id, answer )
+                                self.WriteMessage( event.user_id, answer, const.__KEYBOARD__ )
+                            elif userCode == 2:
+                                self.WriteMessage( event.user_id, answer, const.__KEYBOARD_askdate__ )
+                            elif userCode == 3:
+                                self.WriteMessage( event.user_id, answer, const.__KEYBOARD_back__ )
+                            elif userCode == 4:
+                                self.WriteMessage( event.user_id, answer, const.__KEYBOARD_schedule__ )
                             else:
                                 if self.DBMethods.checkUser( event.user_id ) == True:
                                     self.DBMethods.removeUser( event.user_id )
                                     self.DBMethods.addNewUserInformation(
                                         self.getUserInformation( event.user_id )[ 0 ] )
                                     answer, userCode = bot.MessageParcer( event.text )
-                                    self.WriteMessage( event.user_id, answer )
+                                    self.WriteMessage( event.user_id, answer, const.__KEYBOARD__ )
                                 else:
                                     self.DBMethods.addNewUserInformation(
                                         self.getUserInformation( event.user_id )[ 0 ] )
                                     answer, userCode = bot.MessageParcer( event.text )
-                                    self.WriteMessage( event.user_id, answer )
-                        else:
-                            pass
-            except:
-                continue
+                                    self.WriteMessage( event.user_id, answer, const.__KEYBOARD__ )
+                except:
+                    continue
+        except:
+            pass
 
-    def WriteMessage ( self, user_id, message ):
+    def WriteMessage ( self, user_id, message, keyboard ):
         self.session.method( 'messages.send',
                              { 'user_id': user_id, 'message': message, 'random_id': random.random( ) * 1000,
-                               'keyboard': const.__KEYBOARD__ } )
+                               'keyboard': keyboard } )
 
     def getUserInformation ( self, user_id ):
         return self.session.method( 'users.get',
